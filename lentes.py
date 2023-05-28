@@ -1,8 +1,28 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
+
+def show_function_name(func):
+    '''
+    Este es un decorador que dice que funcion se esta ejecutando.
+    '''
+    def wrapper(*args, **kwargs):
+        print(f"Se está utilizando la función: {func.__name__}")
+        return func(*args, **kwargs)
+    return wrapper
+
 class Lentes:
+    '''
+    Esta es una clase que recibe por argumentos un diccionario con los valores de distancia del objeto, distancia de la imagen, distancia focal
+    para asi calcular la magnificacion del lente usado, calcular el valor faltante en el diccionario ingresado y guardando métodos aprovechados 
+    por otras subclases.
+    '''
+
     def __init__(self, **kwargs):
+        '''
+        constructor de la clase Lentes, hace que esta reciba por argumento a un diccionario con los valores asociados al lente, ademas, dice que
+        valor falta en el diccionario ingresado a través de un nuevo diccionario con los 3 valores de los cuales uno cualquiera es opcional.
+        '''
         self.diccionario = kwargs
         
         opciones = {'f': 'foco', 'd': 'distancia de objeto', 'imagen': 'distancia imagen'}
@@ -15,6 +35,10 @@ class Lentes:
             print('No se proporcionaron valores.')
 
     def calcular_faltante(self):
+        '''
+        define la variable faltante en el diccionario ingresado como argumento de la clase Lentes y la calcula, posteriormente da a los valores
+        de h, f, d e imagen el valor numerico correspondiente y lo guarda en un diccionario.
+        '''
         resultado = {}
         
         try:
@@ -65,6 +89,12 @@ class Lentes:
         return resultado
     
     def magnificacion(self, diccionario):
+        '''
+        recibe como argumento un diccionario en el que estan TODOS los datos del lente (f, h, imagen, d) y calcula la magnificación
+        del lente usado, posteriormente dependiendo de la distancia focal del lente ejecuta la grafica de un lente convergente
+        o de uno divergente respectivamente.
+        '''
+
         f = diccionario['f']
         d = diccionario['d']
         imagen = diccionario['imagen']
@@ -78,8 +108,11 @@ class Lentes:
             self.grafica_lente_convergente(f, d, h, imagen, altura_imagen)
         elif f<0:
             self.grafica_lente_divergente(f, d, h, imagen, altura_imagen)
-    
+
     def rayos_incidentes(self, f, d, h,imagen):
+        '''
+        grafica los rayos que van desde el objeto a en un lente convergente con el uso de las distancia d, f, h, imagen.
+        '''
         #rayo paralelo
         plt.plot([-abs(d), 0], [h, h], color = 'red', linewidth = 2.5)
 
@@ -131,8 +164,10 @@ class Lentes:
 
         plt.show()
 
-
     def rayos_emergentes(self, f, d, h, imagen, list, m_centro):
+        '''
+        grafica los rayos que van desde la lente a la imagen del objeto con el uso de las distancia d, f, h, imagen.
+        '''
         #rayo que pasa por el foco emerge paralelo
         plt.plot([0, d+100], [list[1], list[1]], color = 'green', linewidth = 2.5)
 
@@ -188,24 +223,45 @@ class Lentes:
 
         #vector altura de la imagen
         plt.quiver(x_intersect, 0, 0, y_intersect, angles='xy', scale_units='xy', scale=1)
-        print(f'la altura del objeto: {h}\n',f'altura de la imagen: {y_intersect}' if y_intersect != 0 else '') 
+        print(f'\nel foco del lente es: {f}\n',f'la altura del objeto: {h}\n',f'la posicion del objeto es: {d}\n',f'la imagen esta a {imagen}\n'if imagen !=0 else 'la imagen esta en el infinito\n',f'altura de la imagen: {y_intersect}\n' if y_intersect != 0 else '\n') 
 
         #punto focal
         plt.show()
 
 class LenteDivergente(Lentes):
+    '''
+    Es una subclase de la clase Lentes, de la cual hereda el constructor y los métodos: calcular faltante, magnificación y rayos incidentes. Es una clase
+    dirigida a los lentes divergentes y el gráfico de un sistema en el que se calcula la distancia faltante en el diccionario ingresado como argumento.
+    '''
+    @show_function_name
     def __init__(self, **kwargs):
+        '''
+        constructor heredado de la clase Lentes hace que la clase reciba un diccionario y diga que valor falto.
+        '''
         super().__init__(**kwargs)
         self.list = []
 
+    @show_function_name
     def calcular_faltante(self):
+        '''
+        metodo heredado de la clase Lentes, clacula la variable faltante en el diccionario ingresado y retorna TODOS los valores en un diccionario.
+        '''
         return super().calcular_faltante()
     
+    @show_function_name
     def magnificacion(self, diccionario):
+        ''' 
+        metodo heredado de la clase Lentes, calcula la magnificacion del lente usado y ejecuta la graficacion de un lente convergente o divergente
+        respectivamente.
+        '''
         return super().magnificacion(diccionario)
     
-
+    @show_function_name
     def grafica_lente_divergente(self, f, d, h, imagen, altura_imagen):
+        '''
+        Crea un espacio en el cual se graficaran los métodos rayos_incidentes y rayos_emergentes, ademas, agrega una imagen construida a partir de 
+        circunferencias y un cuadrado de una lente delgada divergente.
+        '''
         fig, ax = plt.subplots()
 
         # Crear Wedges
@@ -240,8 +296,12 @@ class LenteDivergente(Lentes):
     
         #agrego los rayos
         self.rayos_incidentes(f, d, h, imagen)
-
+    @show_function_name
     def rayos_incidentes(self, f, d, h,imagen):
+        '''
+        gráfica los tres rayos principales que salen de el obljeto en el espacio generado por el método grafica_lente_divergente, los rayos 
+        inician de el objeto y finalizan en el lente
+        '''
         #rayo paralelo
         plt.plot([-abs(d), 0], [h, h], color = 'red', linewidth = 2.5)
 
@@ -290,27 +350,48 @@ class LenteDivergente(Lentes):
 
         #agrego rayos emergentes
         self.rayos_emergentes(f, d, h, imagen, interseccion, m_c)
-
         plt.show()
+    @show_function_name
     def rayos_emergentes(self, f, d, h, imagen, list, m_centro):
+        '''
+        metodo heredado de la clase Lentes gráfica los tres rayos principales que salen de el lente en el espacio generado por el método
+        grafica_lente_divergente, los rayos inician de el lente y finalizan en la imagen o en el infinito respectivamente.
+        '''
         return super().rayos_emergentes(f, d, h, imagen, list, m_centro)
 
-
 class LenteConvergente(Lentes):
+    '''
+    Es una subclase de la clase Lentes, de la cual hereda el constructor y los métodos: calcular faltante, magnificación y rayos incidentes. Es una clase
+    dirigida a los lentes convergentes y al gráfico de un sistema en el que se calcula la distancia faltante en el diccionario ingresado como argumento.
+    '''
+    @show_function_name
     def __init__(self, **kwargs):
+        '''
+        constructor heredado de la clase Lentes hace que la clase reciba un diccionario y diga que valor falto.
+        '''
         super().__init__(**kwargs)
         self.list = []
-
+    @show_function_name
     def calcular_faltante(self):
+        '''
+        metodo heredado de la clase Lentes, clacula la variable faltante en el diccionario ingresado y retorna TODOS los valores en un diccionario.
+        '''
         resultado = super().calcular_faltante()
-        # Imprimir el diccionario
         self.magnificacion(resultado)
         return resultado
-
+    @show_function_name
     def magnificacion(self, diccionario):
+        ''' 
+        metodo heredado de la clase Lentes, calcula la magnificacion del lente usado y ejecuta la graficacion de un lente convergente o divergente
+        respectivamente.
+        '''
         return super().magnificacion(diccionario)
-
+    @show_function_name
     def grafica_lente_convergente(self,f, d, h, imagen, altura_imagen):
+        '''
+        Crea un espacio en el cual se graficaran los métodos rayos_incidentes y rayos_emergentes, ademas, agrega una imagen construida a partir de 
+        circunferencias de una lente delgada divergente.
+        '''
         fig, ax = plt.subplots()
         # Crear Wedges{cuñás}
         div = 7
@@ -343,14 +424,51 @@ class LenteConvergente(Lentes):
     
         #agrego los rayos
         self.rayos_incidentes(f, d, h, imagen)
-
+    @show_function_name
     def rayos_incidentes(self, f, d, h, imagen):
+        '''
+        método heredado de la clase Lentes, grafica los rayos que van desde el objeto a en un lente convergente con el uso
+        de las distancia d, f, h, imagen.
+        '''
         return super().rayos_incidentes(f, d, h, imagen)
-    
+    @show_function_name
     def rayos_emergentes(self, f, d, h, imagen, list, m_centro):
+        '''
+        método heredado de la clase Lentes, grafica los rayos que van desde la lente convergente a la imagen del objeto con el uso 
+        de las distancia d, f, h, imagen.
+        '''
         return super().rayos_emergentes(f, d, h, imagen, list, m_centro)
 
-'''se usara la siguiente seccion de codigo para la presentación'''
+# @show_function_name
+# def valor_faltante():
+#     '''
+#     asocia los valores de una lista de tuplas a traves de un ciclo for para guardar de forma ordenada los valores dedistancia 
+#     focal, distancia objeto, distancia imagen y altura del objeto en un diccionario.
+#     '''
+#     diccionario = {}
+#     print('manejar una sola unidad (mm, cm, m) \nsolo puede faltar uno de los tres datos foco, distancia de objeto, distancia de imagen\n\n')
+
+#     opciones = [('f', 'Ingrese el foco del lente (deje en blanco si falta): '),
+#                ('d', 'Ingrese la distancia del lente al objeto (deje en blanco si falta): '),
+#                ('imagen', 'Ingrese la imagen del objeto (deje en blanco si falta): '), 
+#                ('h','Ingrese la altura del objeto: ')]
+
+#     for clave, mensaje in opciones:
+#         while True:
+#             valor = input(mensaje)
+#             if valor:
+#                 try:
+#                     diccionario[clave] = float(valor)
+#                     break
+#                 except ValueError:
+#                     print('Ingrese un valor numérico válido.')
+#             else:
+#                 break
+    
+#     return diccionario
+
+# se usara la siguiente seccion de codigo para la presentación
+
 def valor_faltante():
     diccionario = {}
     print('manejar una sola unidad (mm, cm, m), solo puede faltar uno de los tres datos foco, distancia de objeto, distancia de imagen')
@@ -371,30 +489,7 @@ def valor_faltante():
     except ValueError:
         print('Ingrese valores válidos')
         return valor_faltante()
-    
-# def valor_faltante():
-#     diccionario = {}
-#     print('manejar una sola unidad (mm, cm, m)')
 
-#     opciones = [('f', 'Ingrese el foco del lente (deje en blanco si falta): '),
-#                ('d', 'Ingrese la distancia del lente al objeto (deje en blanco si falta): '),
-#                ('imagen', 'Ingrese la imagen del objeto (deje en blanco si falta): '), 
-#                ('h','Ingrese la altura del objeto: ')]
-
-#     for clave, mensaje in opciones:
-#         while True:
-#             valor = input(mensaje)
-#             if valor:
-#                 try:
-#                     diccionario[clave] = float(valor)
-#                     break
-#                 except ValueError:
-#                     print('Ingrese un valor numérico válido.')
-#             else:
-#                 break
-    
-#     return diccionario
-    
 diccionario = valor_faltante()
 lente = LenteConvergente(**diccionario) if diccionario['f'] > 0 else LenteDivergente(**diccionario)
 if len(diccionario) == 3:
