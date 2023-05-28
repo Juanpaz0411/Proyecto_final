@@ -193,9 +193,10 @@ def rayos_emergentes(f, d, h, imagen, list, m_centro):
     #punto focal
     plt.show()
 
-f = 0#float(input('ingrese el foco de el lente\n')) #distancia focal
-d = 5#float(input('a que distancia esta el lente del objeto?\n')) #a que distancia esta el lente?
-h = 5#float(input('a que altura respecto al eje axial esta ubicado el objeto?\n')) #altura de el lente
+print('manejar un sola unidad(mm, cm, m)')
+f = float(input('ingrese el foco de el lente:\n')) #distancia focal
+d = abs(float(input('distancia de el lente del objeto:\n'))) #a que distancia esta el lente?
+h = float(input('altura del objeto respecto al eje axial: \n')) #altura de el lente
 print(f'el objeto está a: {d}\nla distancia focal es: {f}')
 try:
     imagen = 1/((1/f)-(1/d))
