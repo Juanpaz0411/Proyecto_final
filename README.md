@@ -57,4 +57,14 @@ Inicialmente se planeaba programar una cuarta clase 'par_de_lentes' la cual hari
 Hay dos diferencias entre las clases 'lente_convergente' y 'lente_divergente', la primera radica en la imagen que simula el lente y la segunda radica en la fución rayo_emergente, en el caso de la funcion rayo emergente de el lente divergente la pendiente del rayo verde cambia debido a que se cabia el punto a través del cual se calcula.
 
 
+Se uso el decorador 'show_function_name' para saber que funcion se está ejecutando.
+
+	def show_function_name(func):
+		'''
+		Este es un decorador que dice que funcion se esta ejecutando.
+		'''
+		def wrapper(*args, **kwargs):
+			print(f"Se está utilizando la función: {func.__name__}")
+			return func(*args, **kwargs)
+		return wrapper
 
