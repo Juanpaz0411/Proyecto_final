@@ -16,7 +16,7 @@
 
 Este codigo gráfica un sistema de lentes ya sea convergente o divergente y ubica en el dos vectores, uno correspondiente a el objeto y otro correspondiente a la imagen, cada vector representa la dirección y el tamaño.
 
-Lo que hace el codigo para cada caso se muestra en las siguientes imagentes:
+Lo que hace el codigo para cada caso se muestra en las siguientes imagenes:
 
 
 <div align="center">
@@ -30,7 +30,7 @@ Lo que hace el codigo para cada caso se muestra en las siguientes imagentes:
   </div>
 </div>
 
-La forma de ejecutar este programa es a traves de la funcion valor_faltante,  funcion la cual permite al usuario ingresar los valores de el lente y los guarda en un diccionario  el cual sera pasado como argumento a alguna de las clases.
+La forma de ejecutar este programa es a través de la función valor_faltante,  función la cual permite al usuario ingresar los valores de el lente y los guarda en un diccionario  el cual sera pasado como argumento a alguna de las clases.
 
 Porteriormente dependiendo si el foco es negativo o positivo se ejecuta la siguiente sección de codigo la cual ejecuta la clase lente convergente o lente divergente de forma respectiva: 
 
@@ -42,7 +42,7 @@ Porteriormente dependiendo si el foco es negativo o positivo se ejecuta la sigui
 		lente.magnificacion(diccionario)
 	else:
 		print('error, se necesitan minimo dos 3 datos para la ejecucion del programa')
-Cage resaltar que en esa misma seccion de codigo se ejecuta la funcion 'lente.calcular_faltante()' si falta un dato de los cuatro datos necesarios para gráficar, de estar completos se ejecuta directamente 'lente.magnificacion()' para calcular la altura de la imagen y la magnificación de el lente, a partir de aqui el resto de las funciones se ejecutan solas a través de llamadas en las funciones que le preceden. En caso de que los datos de el diccionario sean menores a 3 no se sigue ejecutando el codigo y se imprime una alerta de error.
+Cabe resaltar que en esa misma sección de codigo se ejecuta la función 'lente.calcular_faltante()' si falta un dato de los cuatro datos necesarios para gráficar, de estar completos se ejecuta directamente 'lente.magnificacion()' para calcular la altura de la imagen y la magnificación de el lente, a partir de aqui el resto de las funciones se ejecutan solas a través de llamadas en las funciones que le preceden. En caso de que los datos de el diccionario sean menores a 3 no se sigue ejecutando el codigo y se imprime una alerta de error.
 
 El codigo consta de tres clases, una clase padre 'lentes' la cual tiene un constructor que hace que el argumento de los objetos de la clase sean diccionarios y unas funciones las cuales fueron importadas en las clases hijas 'lente_convergente' y 'lente_divergente', cada clase recibe como argumento un diccionario con los datos del lente: distancia focal, distancia del objeto, distancia de la imagen, altura de la imagen. En este diccionario es posible no ingresar uno de los primeros tres datos haciendo que la clase correspondiente calcule el valor faltante guardando los datos completos en un nuevo diccionario el cual se usara como argumento para poder graficar. 
 
