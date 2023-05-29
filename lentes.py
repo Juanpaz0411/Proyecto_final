@@ -241,12 +241,14 @@ class LenteDivergente(Lentes):
         super().__init__(**kwargs)
         self.list = []
 
-    @show_function_name
+    @show_function_name    
     def calcular_faltante(self):
         '''
         metodo heredado de la clase Lentes, clacula la variable faltante en el diccionario ingresado y retorna TODOS los valores en un diccionario.
         '''
-        return super().calcular_faltante()
+        resultado = super().calcular_faltante()
+        self.magnificacion(resultado)
+        return resultado
     
     @show_function_name
     def magnificacion(self, diccionario):
@@ -296,6 +298,7 @@ class LenteDivergente(Lentes):
     
         #agrego los rayos
         self.rayos_incidentes(f, d, h, imagen)
+
     @show_function_name
     def rayos_incidentes(self, f, d, h,imagen):
         '''
