@@ -473,13 +473,13 @@ def valor_faltante():
     diccionario = {}
     print('manejar una sola unidad (mm, cm, m), solo puede faltar uno de los tres datos foco, distancia de objeto, distancia de imagen')
     try:
-        f = 10#input('ingrese el foco del lente (deje en blanco si falta):\n')
+        f = -10#input('ingrese el foco del lente (deje en blanco si falta):\n')
         if f:
             diccionario['f'] = float(f)
         d = 5#input('ingrese la distancia del lente al objeto (deje en blanco si falta):\n')
         if d:
             diccionario['d'] = abs(float(d))
-        imagen = -10#input('ingrese la distancia de la imagen al objeto (deje en blanco si falta):\n')
+        imagen = input('ingrese la distancia de la imagen al objeto (deje en blanco si falta):\n')
         if imagen:
             diccionario['imagen'] = float(imagen)
         h = 4#input('ingrese la altura del objeto (deje en blanco si falta):\n')
