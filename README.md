@@ -3,15 +3,15 @@
 <h1 align="center"> Sistema de lentes delgadas convergente y divergente.</h1>
 
 ------------
+<p align="center">
+  <img src="https://github.com/Juanpaz0411/Proyecto_final/blob/master/imagenes%20readme/portada.jpeg.jpeg" alt="portada" width="600" />
+  <br>
+</p>
 #####  *Proyecto final de programación*
 #####  *Juan jose paz hormiga*
 ##### *Universidad del Quindio*
 ##### *Programa de física*
 ##### *2023*
-<p align="center">
-  <img src="https://github.com/Juanpaz0411/Proyecto_final/blob/master/imagenes%20readme/portada.jpeg.jpeg" alt="portada" width="400" />
-  <br>
-</p>
 
 Este codigo gráfica un sistema de lentes ya sea convergente o divergente y ubica en el dos vectores, uno correspondiente a el objeto y otro correspondiente a la imagen, cada vector representa la dirección y el tamaño.
 
