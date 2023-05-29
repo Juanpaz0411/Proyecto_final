@@ -7,6 +7,7 @@
   <img src="https://github.com/Juanpaz0411/Proyecto_final/blob/master/imagenes%20readme/portada.jpeg.jpeg" alt="portada" width="600" />
   <br>
 </p>
+
 #####  *Proyecto final de programación*
 #####  *Juan jose paz hormiga*
 ##### *Universidad del Quindio*
