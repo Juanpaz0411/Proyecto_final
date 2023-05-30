@@ -85,9 +85,12 @@ class Lentes:
                 resultado['imagen'] = 0
                 resultado['h'] = self.diccionario['h']
                 print(f'La imagen está en el infinito ya que el objeto está en el foco: {d}')
-
+        
+        diccionario = resultado
+        lente = LenteConvergente(**diccionario) if diccionario['f'] > 0 else LenteDivergente(**diccionario)
+        lente.magnificacion(diccionario)
         return resultado
-    
+
     def magnificacion(self, diccionario):
         '''
         recibe como argumento un diccionario en el que estan TODOS los datos del lente (f, h, imagen, d) y calcula la magnificación
@@ -241,7 +244,7 @@ class LenteDivergente(Lentes):
         super().__init__(**kwargs)
         self.list = []
 
-    @show_function_name    
+    @show_function_name
     def calcular_faltante(self):
         '''
         metodo heredado de la clase Lentes, clacula la variable faltante en el diccionario ingresado y retorna TODOS los valores en un diccionario.
@@ -442,36 +445,7 @@ class LenteConvergente(Lentes):
         '''
         return super().rayos_emergentes(f, d, h, imagen, list, m_centro)
 
-# @show_function_name
-# def valor_faltante():
-#     '''
-#     asocia los valores de una lista de tuplas a traves de un ciclo for para guardar de forma ordenada los valores dedistancia 
-#     focal, distancia objeto, distancia imagen y altura del objeto en un diccionario.
-#     '''
-#     diccionario = {}
-#     print('manejar una sola unidad (mm, cm, m) \nsolo puede faltar uno de los tres datos foco, distancia de objeto, distancia de imagen\n\n')
-
-#     opciones = [('f', 'Ingrese el foco del lente (deje en blanco si falta): '),
-#                ('d', 'Ingrese la distancia del lente al objeto (deje en blanco si falta): '),
-#                ('imagen', 'Ingrese la imagen del objeto (deje en blanco si falta): '), 
-#                ('h','Ingrese la altura del objeto: ')]
-
-#     for clave, mensaje in opciones:
-#         while True:
-#             valor = input(mensaje)
-#             if valor:
-#                 try:
-#                     diccionario[clave] = float(valor)
-#                     break
-#                 except ValueError:
-#                     print('Ingrese un valor numérico válido.')
-#             else:
-#                 break
-    
-#     return diccionario
-
-# se usara la siguiente seccion de codigo para la presentación
-
+@show_function_name
 def valor_faltante():
     diccionario = {}
     print('manejar una sola unidad (mm, cm, m), solo puede faltar uno de los tres datos foco, distancia de objeto, distancia de imagen')
@@ -479,22 +453,25 @@ def valor_faltante():
         f = -10#input('ingrese el foco del lente (deje en blanco si falta):\n')
         if f:
             diccionario['f'] = float(f)
-        d = 5#input('ingrese la distancia del lente al objeto (deje en blanco si falta):\n')
+        d = input('ingrese la distancia del lente al objeto (deje en blanco si falta):\n')
         if d:
             diccionario['d'] = abs(float(d))
-        imagen = input('ingrese la distancia de la imagen al objeto (deje en blanco si falta):\n')
+        imagen = -3.3333333333333335#input('ingrese la distancia de la imagen al objeto (deje en blanco si falta):\n')
         if imagen:
             diccionario['imagen'] = float(imagen)
-        h = 4#input('ingrese la altura del objeto (deje en blanco si falta):\n')
-        if h:
+        h = 5#input('ingrese la altura del objeto (deje en blanco si falta):\n')
+        if h and float(h) != 0:
             diccionario['h'] = float(h)
+        else:
+            diccionario['h'] = 0.00000000001
         return diccionario
     except ValueError:
         print('Ingrese valores válidos')
         return valor_faltante()
-
+    
 diccionario = valor_faltante()
-lente = LenteConvergente(**diccionario) if diccionario['f'] > 0 else LenteDivergente(**diccionario)
+lente = Lentes(**diccionario) if 'f' not in diccionario else (LenteConvergente(**diccionario) if diccionario['f'] > 0 else (LenteDivergente(**diccionario) if diccionario['f'] < 0 else (print('como que un foco = 0 mamahuevo?') if diccionario['f'] == 0 else None)))
+
 if len(diccionario) == 3:
     lente.calcular_faltante()
 elif len(diccionario) == 4:
