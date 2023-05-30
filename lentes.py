@@ -453,7 +453,7 @@ def valor_faltante():
         f = -10#input('ingrese el foco del lente (deje en blanco si falta):\n')
         if f:
             diccionario['f'] = float(f)
-        d = input('ingrese la distancia del lente al objeto (deje en blanco si falta):\n')
+        d = 5#input('ingrese la distancia del lente al objeto (deje en blanco si falta):\n')
         if d:
             diccionario['d'] = abs(float(d))
         imagen = -3.3333333333333335#input('ingrese la distancia de la imagen al objeto (deje en blanco si falta):\n')
